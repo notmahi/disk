@@ -1,0 +1,60 @@
+# @package _global_
+
+defaults:
+    - agent: incremental
+    - env: ant
+
+# Reward module
+transformed_obs_shape: ???
+saved_latent_per_skill: 100
+max_running_obses: 1
+slow_update_coeff: ${max_running_obses}
+total_skills: ???
+use_entropy: true
+
+num_eval_episodes: 3
+device: cuda
+
+# logger
+log_frequency: 100
+log_save_tb: false
+
+# video recorder
+save_video: true
+record_freq: 1e5
+
+# Load skills
+load_saved: false
+eval_only: false
+# load_directory: /media/mahi/data/exp/exp/gym.HalfCheetah-v3_inc/2021.05.25/2101_incremental-gym.HalfCheetah-v3-t-obs-no-time-ent-half-traj-2500000.0-com
+# load_directory: /home/mahi/code/incremental_primitives/primitive_learning/exp/gym.Ant-v3_inc/2021.09.27/1758_incremental-gym.Ant-v3-forever-reference
+load_directory: /home/mahi/code/incremental_primitives/primitive_learning/exp/gym.Ant-v3_inc/2021.10.03/1728_incremental-gym.Ant-v3-forever
+# load_directory: /home/mahi/code/incremental_primitives/primitive_learning/exp/gym.Ant-v3_inc/2021.10.01/0036_incremental-gym.Ant-v3-forever
+# load_directory: /home/mahi/code/incremental_primitives/primitive_learning/exp/2021.05.19/1853_incremental-gym.Ant-block-block/skills
+# load_directory: /home/mahi/code/incremental_primitives/primitive_learning/exp/2021.05.02/0113_incremental-gym.Ant-v3-t-vel-no-time-ent-half-traj
+# load_directory: /media/mahi/data/exp/exp/gym.Swimmer-v3_inc/2021.05.25/2103_incremental-gym.Swimmer-v3-t-obs-no-time-ent-half-traj-2500000.0-com
+updates_per_step: 1
+
+# block stuff
+num_blocks: 40
+blocks_to_remove_at_once: 10
+
+seed: 1
+
+# wandb tags and group
+experiment: incremental-${env}-scale
+group: incremental-${env}
+tags:
+    - incremental
+    - ${env}
+    - consistency_buffer_size_0_5
+    - save-skills
+    - updates_${updates_per_step}
+
+# hydra configuration
+hydra:
+    job:
+        name: ${now:%H%M}_${env}
+    run:
+        # dir: /scratch/nms572/exp/${env}_inc/${now:%Y.%m.%d}/${now:%H%M}_${experiment}
+        dir: ./exp/${env}_inc/${now:%Y.%m.%d}/${now:%H%M}_${experiment}

@@ -1,0 +1,28 @@
+# @package _global_
+env: gym.Ant-v3
+
+max_episode_steps: 100
+max_test_episode_steps: 500
+
+num_train_steps: 9e6
+
+collected_trajectories: 1e2
+alpha: 60.0
+beta: 1.0
+
+# Variable length
+num_steps_per_skill: 
+  - 5e5
+  - 5e5
+  - 1e6
+  - 1e6
+  - 1e6
+  - 1e6
+  - 1e6
+  - 1e6
+  - 1e6
+  - 1e6
+replay_buffer_capacity: 2e6
+
+num_seed_steps: 5000
+eval_frequency: 1000

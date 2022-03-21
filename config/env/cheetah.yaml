@@ -1,0 +1,24 @@
+# @package _global_
+env: dm.cheetah_run
+
+max_episode_steps: 100
+max_test_episode_steps: 500
+
+num_train_steps: 25e5
+num_steps_per_skill: 125e3
+# No purge, change later.
+replay_buffer_capacity: 25e5
+
+num_seed_steps: 5000
+eval_frequency: 25
+
+collected_trajectories: 1e2
+alpha: 1.0
+beta: 1.0
+
+# num_train_steps: 500
+# num_steps_per_skill: 250
+# replay_buffer_capacity: 500
+
+# num_seed_steps: 5
+# eval_frequency: 2

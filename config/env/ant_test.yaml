@@ -1,0 +1,22 @@
+# @package _global_
+env: gym.Ant-v3
+
+max_episode_steps: 100
+max_test_episode_steps: 500
+
+collected_trajectories: 1e2
+alpha: 60.0
+beta: 1.0
+
+# Test config
+
+num_train_steps: 1000
+num_steps_per_skill:
+  - 100
+  - 200
+  - 300
+  - 400
+replay_buffer_capacity: 1000
+
+num_seed_steps: 5
+eval_frequency: 5

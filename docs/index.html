@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Social share meta tags -->
+  <meta property="og:title" content="One After Another: Learning Incremental Skills for a Changing World">
+  <meta property="og:description"
+    content="A new unsupervised skill learning method, DISk, which can learn skills even in changing environments.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="One After Another: Learning Incremental Skills for a Changing World">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="One After Another: Learning Incremental Skills for a Changing World">
+  <meta name="twitter:description"
+    content="A new unsupervised skill learning method, DISk, which can learn skills even in changing environments.">
+  <meta name="twitter:image" content="https://notmahi.github.io/disk/files/results.png" />
+  <!-- End social share meta tags -->
+  <link rel="shortcut icon" href="img/favicon.png">
+  <link rel="stylesheet" href="css/simple-grid.css">
+  <title>One After Another: Learning Incremental Skills for a Changing World</title>
+  <meta name="description" content="A simple, lightweight grid and container system for your website.">
+  <!-- End Google Analytics -->
+  <!-- Start mathjax -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+  <div class="jumbotron">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 center">
+          <h1>One After Another: Learning Incremental Skills for a Changing World</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4 hidden-sm"></div>
+        <div class="col-2 center">
+          <a href="https://arxiv.org/" download>
+            <h3>Paper</h3>
+          </a>
+        </div>
+        <div class="col-2 center">
+          <a href="https://github.com/notmahi/disk" download>
+            <h3>Code</h3>
+          </a>
+        </div>
+
+
+        <div class="col-4 hidden-sm"></div>
+      </div>
+      <div class="row">
+        <div class="col-6 center">
+          <h3><a href="https://mahis.life">Nur Muhammad (Mahi) Shafiullah</a></h3>
+          <p>
+            New York University
+          </p>
+        </div>
+        <div class="col-6 center">
+          <h3><a href="https://lerrelpinto.com">Lerrel Pinto</a></h3>
+          <p>
+            New York University
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1 hidden-sm"></div>
+        <div class="col-10 center img">
+          <div class="auto-resizable-iframe">
+            <div>
+              <iframe src="https://www.youtube.com/embed/ALu21MQDWPc" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-1 hidden-sm"></div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <h2 class="center m-bottom">Abstract</h3>
+            <p>
+              Reward-free, unsupervised discovery of skills is an attractive alternative to the bottleneck of
+              hand-designing rewards in environments where task supervision is scarce or expensive. However, current
+              skill pre-training methods, like many RL techniques, make a fundamental assumption — stationary
+              environments during training. Traditional methods learn all their skills simultaneously, which makes it
+              difficult for them to both quickly adapt to changes in the environment, and to not forget earlier skills
+              after such adaptation. On the other hand, in an evolving or expanding environment, skill learning must be
+              able to adapt fast to new environment situations while not forgetting previously learned skills. These two
+              conditions make it difficult for classic skill discovery to do well in an evolving environment. In this
+              work, we propose a new framework for skill discovery, where skills are learned one after another in an
+              incremental fashion. This framework allows newly learned skills to adapt to new environment or agent
+              dynamics, while the fixed old skills ensure the agent doesn't forget a learned skill. We demonstrate
+              experimentally that in both evolving and static environments, incremental skills significantly outperform
+              current state-of-the-art skill discovery methods on both skill quality and the ability to solve downstream
+              tasks.
+            </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <h2 class="center">Method</h3>
+            <p>
+              The key feature of our algorithm, DISk, is that it learns skills incrementally.
+              This means that, at any time, DISk starts with some previously learned skills, and can learn a new skill
+              that is different from the previous skills while being consistent with itself.
+            </p>
+            <span class="center">
+              <video class="img center" controls muted autoplay loop>
+                <source src="files/skill_learning.webm" type="video/webm">
+                <source src="files/skill_learning_browser.mp4" type="video/mp4">
+              </video>
+            </span>
+            <p>
+              To learn a new skill \(\pi_M\) in a potentially evolved environment, we start with collecting an
+              experience
+              buffer \(\tau\) with states \(s\sim\pi_m\) collected from previous skills. Then, we collect transitions
+              \((s,
+              a, s')\) by running \(\pi_M\) on the environment. We store this transition in the replay buffer, and also
+              store the projected state \(\sigma(s')\)in a circular buffer <strong>Buf</strong>. Then, to update our
+              policy
+              parameter \(\theta_M\), on each update step, we sample \((s, a, s')\) from our replay buffer and calculate
+              the
+              intrinsic reward of that sample.
+            </p>
+            <p>
+              To calculate this, we first find the \(k^{\text{th}}\) Nearest Neighbor of
+              \(\sigma(s')\) within <strong>Buf</strong>, called \(\sigma_c\) henceforth. Then, we sample a batch
+              \(\tau_b
+              \subset
+              \tau\), and find the \(k^{\text{th}}\) Nearest Neighbor of \(\sigma(s')\) within \(\sigma(\tau_b) =
+              \{\sigma(s)
+              \mid s \in \tau_b\}\), called \(\sigma_d\) henceforth. Given these nearest neighbors, we define our
+              consistency penalty $$r_c := ||\sigma(s') - \sigma_c||_2$$ and our diversity reward $$r_d := ||\sigma(s')
+              -
+              \sigma_d||_2$$ which yields an intrinsic reward $$r_I := -\alpha r_c + \beta r_d$$ \(\alpha\) and
+              \(\beta\) are
+              estimated such that the expected value of \(\alpha r_c \) and \( \beta r_d\) are close in magnitude, which
+              is
+              done by using the mean values of \(r_c\) and \(r_d\) from the previous skill \(\pi_{M-1}\).
+            </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="body-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-4 hidden-sm"></div>
+        <div class="col-4">
+          <div class="line"></div>
+        </div>
+        <div class="col-4 hidden-sm"></div>
+      </div>
+      <div class="row">
+        <div class="col-1 hidden-sm"></div>
+        <div class="col-10">
+          <h2 class="center m-bottom">Results</h3>
+        </div>
+        <div class="col-1 hidden-sm"></div>
+      </div>
+      <div class="grid-display">
+        <div class="row">
+          <div class="col-12">
+            <img src="files/results.png" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-1 hidden-sm"></div>
+          <div class="col-10">
+            <h2 class="center">Skill Execution</h3>
+          </div>
+          <div class="col-1 hidden-sm"></div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <video class="img" controls muted autoplay loop>
+              <source src="files/ant.webm" type="video/webm">
+              <source src="files/ant_browser.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="col-12">
+            <video class="img" controls muted autoplay loop>
+              <source src="files/swimmer.webm" type="video/webm">
+              <source src="files/swimmer_browser.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="col-12">
+            <video class="img" controls muted autoplay loop>
+              <source src="files/cheetah.webm" type="video/webm">
+              <source src="files/cheetah_browser.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4 hidden-sm"></div>
+          <div class="col-4">
+            <div class="line"></div>
+          </div>
+          <div class="col-4 hidden-sm"></div>
+        </div>
+        <div class="row">
+          <div class="col-1 hidden-sm"></div>
+          <div class="col-10">
+            <h2 class="center">Citation</h3>
+              <pre class="code">
+@inproceedings{shafiullah2021one,
+  title={One After Another: Learning Incremental Skills for a Changing World},
+  author={Shafiullah, Nur Muhammad Mahi and Pinto, Lerrel},
+  booktitle={International Conference on Learning Representations},
+  year={2021}
+}
+          </pre>
+          </div>
+          <div class="col-1 hidden-sm"></div>
+        </div>
+      </div>
+    </div>
+    <footer>
+    </footer>
+</body>
+
+</html>

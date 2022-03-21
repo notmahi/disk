@@ -1,0 +1,27 @@
+# @package _global_
+env: gym.Ant-block
+
+max_episode_steps: 100
+max_test_episode_steps: 500
+
+collected_trajectories: 1e2
+alpha: 60.0
+beta: 1.0
+# Variable length
+
+num_train_steps: 5e6
+num_steps_per_skill: 
+  - 25e4
+  - 25e4
+  - 1e6
+  - 1e6
+  - 5e5
+  - 5e5
+  - 5e5
+  - 5e5
+  - 25e4
+  - 25e4
+replay_buffer_capacity: 5e6
+
+num_seed_steps: 5000
+eval_frequency: 50

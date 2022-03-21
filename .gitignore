@@ -1,0 +1,15 @@
+__pycache__/
+.ipynb_checkpoints/
+exp
+*.csv
+tb
+
+.DS_Store
+._.DS_Store
+.vscode
+wandb
+
+MUJOCO_LOG.TXT
+outputs/
+
+*sync-conflict*

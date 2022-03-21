@@ -1,0 +1,34 @@
+name: disk
+channels:
+  - nvidia
+  - pytorch
+  - conda-forge 
+  - defaults
+dependencies:
+  - nvidia::cudatoolkit=11.3
+  - python=3.9
+  - pytorch::pytorch
+  - absl-py
+  - plotly=4.14.3
+  - pyparsing
+  - patchelf
+  - ffmpeg=4.0.2
+  - x264=1!152.20180717
+  - pip=22.0.3
+  - pip:
+    - cython
+    - termcolor==1.1.0
+    - mujoco-py==1.50.1.68
+    - lockfile==0.12.2
+    - gym==0.22.0
+    - setuptools==59.5.0
+    - matplotlib==3.3.2
+    - dm-control==0.0.364896371
+    - git+git://github.com/denisyarats/dmc2gym.git
+    - tb-nightly
+    - tensorboard==2.3.0
+    - imageio==2.9.0
+    - imageio-ffmpeg==0.4.2
+    - hydra-core==1.0.7
+    - wandb==0.12.11
+    - plotly==4.14.3

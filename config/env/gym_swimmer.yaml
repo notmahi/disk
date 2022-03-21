@@ -1,0 +1,22 @@
+# @package _global_
+env: gym.Swimmer-v3
+
+max_episode_steps: 200
+max_test_episode_steps: 500
+
+num_train_steps: 25e5
+num_steps_per_skill: 25e4
+replay_buffer_capacity: 5e5
+
+num_seed_steps: 5000
+eval_frequency: 25
+
+collected_trajectories: 1e2
+alpha: 1000.0
+beta: 1.0
+
+# num_train_steps: 15e2
+# num_steps_per_skill: 5e2
+# replay_buffer_capacity: 15e2
+# num_seed_steps: 50
+# eval_frequency: 10

@@ -1,0 +1,13 @@
+# @package _global_
+env: square
+
+max_episode_steps: 10
+max_test_episode_steps: 10
+
+num_train_steps: 1e5
+num_steps_per_skill: 5e4
+replay_buffer_capacity: 5e4
+
+num_seed_steps: 500
+
+eval_frequency: 25
