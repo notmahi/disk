@@ -103,16 +103,18 @@ def add_old(...):
 def compute_reward(transformed_obs, next_transformed_obs, timestep):	
 	# Consistency penalty
 	current_skill_obses, current_skill_next_obses = current_trajectory_buffer[timestep].sample()
-	consistency_penalty = compute_distance(next_transformed_obs, current_skill_next_obses)
+	consistency_penalty = compute_entropy(next_transformed_obs, current_skill_next_obses)
 	
 	# Diversity reward
 	past_skill_obses, past_skill_next_obses = old_trajectory_buffer[timestep].sample()
-	diversity_reward = compute_distance(next_transformed_obs, past_skill_next_obses)
+	diversity_reward = compute_entropy(next_transformed_obs, past_skill_next_obses)
 	
 	return (beta * diversity_reward - alpha * consistency_penalty)
 	
 	
-def compute_distance(obs_vector, set_of_obs):
-	# Return the average euclidean distance 
+def compute_entropy(obs_vector, set_of_obs, k=5):
+	# Estimate the pointwise entropy of a set
+	# Return the k-th top euclidean distance
+	return topk(obs_vector - set_of_obs, k=k)[-1]
+
 ```
-NOTE: We are only using the next_obses for computing the reward. If we want to take directionality in consideration, we could easily make it so using the difference between current and next obs.

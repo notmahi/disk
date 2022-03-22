@@ -1,6 +1,6 @@
 # Discovering Incremental Skills (DISk) implementation in PyTorch
 
-This is PyTorch implementation of Discovering Incremental Skills (DISk) [[OpenReview]](https://openreview.net/forum?id=dg79moSRqIo) [[Presentation]](https://www.youtube.com/watch?v=ALu21MQDWPc) [[Website]](https://notmahi.github.io/disk/) [[Arxiv]](https://arxiv.com).
+This is PyTorch implementation of Discovering Incremental Skills (DISk) [[OpenReview]](https://openreview.net/forum?id=dg79moSRqIo) [[Presentation]](https://www.youtube.com/watch?v=ALu21MQDWPc) [[Website]](https://notmahi.github.io/disk/) [[Arxiv]](https://arxiv.org/abs/2203.11176).
 
 If you use this code in your research project please cite us as:
 ```
